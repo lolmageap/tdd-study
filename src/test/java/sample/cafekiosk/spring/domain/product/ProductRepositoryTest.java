@@ -2,16 +2,14 @@ package sample.cafekiosk.spring.domain.product;
 
 import org.assertj.core.api.Assertions;
 import org.assertj.core.groups.Tuple;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static sample.cafekiosk.spring.domain.product.ProductType.BAKERY;
 import static sample.cafekiosk.spring.domain.product.SellingStatus.*;
 
 @SpringBootTest
@@ -20,33 +18,18 @@ class ProductRepositoryTest {
     @Autowired
     ProductRepository productRepository;
 
+    @AfterEach
+    void tearDown(){
+        productRepository.deleteAllInBatch();
+    }
+
     @Test
     @DisplayName("원하는 판매상태를 가진 상품들을 조회한다.")
     void testFindAllBySellingStatusIn(){
         //given
-        Product product = Product.builder()
-                .productNumber("001")
-                .type(ProductType.HANDMADE)
-                .sellingStatus(SELLING)
-                .name("아메리카노")
-                .price(4000)
-                .build();
-
-        Product product2 = Product.builder()
-                .productNumber("002")
-                .type(ProductType.HANDMADE)
-                .sellingStatus(HOLD)
-                .name("카페라떼")
-                .price(4500)
-                .build();
-
-        Product product3 = Product.builder()
-                .productNumber("003")
-                .type(BAKERY)
-                .sellingStatus(STOP_SELLING)
-                .name("팥빙수")
-                .price(7000)
-                .build();
+        Product product = createProduct("아메리카노", "001", SELLING, 4000);
+        Product product2 = createProduct("카페라떼", "002", HOLD, 4500);
+        Product product3 = createProduct("팥빙수", "003", STOP_SELLING, 7000);
 
         productRepository.saveAll(List.of(product, product2, product3));
 
@@ -66,29 +49,9 @@ class ProductRepositoryTest {
     @DisplayName("상품 번호 리스트를 가진 상품들을 조회한다.")
     void testFindAllByProductNumberIn(){
         //given
-        Product product = Product.builder()
-                .productNumber("001")
-                .type(ProductType.HANDMADE)
-                .sellingStatus(SELLING)
-                .name("아메리카노")
-                .price(4000)
-                .build();
-
-        Product product2 = Product.builder()
-                .productNumber("002")
-                .type(ProductType.HANDMADE)
-                .sellingStatus(HOLD)
-                .name("카페라떼")
-                .price(4500)
-                .build();
-
-        Product product3 = Product.builder()
-                .productNumber("003")
-                .type(BAKERY)
-                .sellingStatus(STOP_SELLING)
-                .name("팥빙수")
-                .price(7000)
-                .build();
+        Product product = createProduct("아메리카노", "001", SELLING, 4000);
+        Product product2 = createProduct("카페라떼", "002", HOLD, 4500);
+        Product product3 = createProduct("팥빙수", "003", STOP_SELLING, 7000);
 
         productRepository.saveAll(List.of(product, product2, product3));
 
@@ -102,6 +65,16 @@ class ProductRepositoryTest {
                         new Tuple("001", "아메리카노", SELLING),
                         new Tuple("002", "카페라떼", HOLD)
                 );
+    }
+
+    private static Product createProduct(String name, String productNumber, SellingStatus sellingStatus, int price) {
+        return Product.builder()
+                .productNumber(productNumber)
+                .name(name)
+                .type(ProductType.HANDMADE)
+                .sellingStatus(sellingStatus)
+                .price(price)
+                .build();
     }
 
 }
