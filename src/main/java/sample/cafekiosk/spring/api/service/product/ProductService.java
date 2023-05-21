@@ -16,7 +16,7 @@ public class ProductService {
     private final ProductRepository productRepository;
 
     public List<ProductResponse> getSellingProducts(){
-        List<Product> products = productRepository.findALlBySellingStatusIn(SellingStatus.forDisplay());
+        List<Product> products = productRepository.findAllBySellingStatusIn(SellingStatus.forDisplay());
 
         return products.stream().map(ProductResponse::of)
                 .collect(Collectors.toList());
