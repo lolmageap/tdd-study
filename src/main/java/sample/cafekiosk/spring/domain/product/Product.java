@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.List;
+
+import static sample.cafekiosk.spring.domain.product.ProductType.*;
 
 @Getter
 @Entity
@@ -35,4 +38,5 @@ public class Product {
         this.name = name;
         this.price = price;
     }
+
 }
