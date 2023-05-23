@@ -15,4 +15,5 @@ public enum OrderStatus {
     COMPLETED("처리완료");
 
     private final String text;
+
 }

@@ -6,8 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import sample.cafekiosk.spring.api.ApiResponse;
 import sample.cafekiosk.spring.api.controller.order.request.OrderCreateRequest;
-import sample.cafekiosk.spring.domain.order.OrderService;
-import sample.cafekiosk.spring.domain.order.request.OrderCreateServiceRequest;
+import sample.cafekiosk.spring.api.service.order.OrderService;
 import sample.cafekiosk.spring.domain.order.response.OrderResponse;
 
 import javax.validation.Valid;

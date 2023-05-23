@@ -34,10 +34,19 @@ public class Order extends BaseEntity {
     private List<OrderProduct> orderProduct = new ArrayList<>();
 
     @Builder
-    private Order(List<Product> products, LocalDateTime now) {
+    private Order(List<Product> products, LocalDateTime registeredDateTime, OrderStatus orderStatus) {
+        this.orderStatus = orderStatus;
+        this.totalPrice = calculateTotalPrice(products);
+        this.registeredDateTime = registeredDateTime;
+        this.orderProduct = products.stream()
+                .map(product -> new OrderProduct(this, product))
+                .collect(Collectors.toList());
+    }
+
+    private Order(List<Product> products, LocalDateTime registeredDateTime) {
         this.orderStatus = OrderStatus.INIT;
         this.totalPrice = calculateTotalPrice(products);
-        this.registeredDateTime = now;
+        this.registeredDateTime = registeredDateTime;
         this.orderProduct = products.stream()
                 .map(product -> new OrderProduct(this, product))
                 .collect(Collectors.toList());
