@@ -4,10 +4,7 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.Spy;
+import org.mockito.*;
 import org.mockito.junit.jupiter.MockitoExtension;
 import sample.cafekiosk.spring.client.mail.MailSendClient;
 import sample.cafekiosk.spring.domain.history.mail.MailSendHistory;
@@ -20,7 +17,8 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class MailServiceTest {
 
-    @Spy
+//    @Spy
+    @Mock
     MailSendClient mailSendClient;
 
     @Mock
@@ -33,8 +31,12 @@ class MailServiceTest {
     @DisplayName("메일 전송 테스트")
     void test(){
         //given
-//        when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+//        Mockito.when(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
 //                .thenReturn(true);
+
+        BDDMockito.given(mailSendClient.sendEmail(anyString(), anyString(), anyString(), anyString()))
+                .willReturn(true);
+
         /**
         @Spy : 객체의 특정 메서드만 스터빙을 하고 나머지 메서드들을 실제 동작을 기대하게 할 수 있는 어노테이션
                doReturn -> true를 무조건 적으로 반환한다.
@@ -42,9 +44,10 @@ class MailServiceTest {
                method -> mailSendClient의 sendEmail만 Stubbing을 하고
                나머지 메서드들은 스터빙을 하지 않고 실제로 동작한다
         **/
-        Mockito.doReturn(true)
-                .when(mailSendClient)
-                .sendEmail(anyString(), anyString(), anyString(), anyString());
+
+//        Mockito.doReturn(true)
+//                .when(mailSendClient)
+//                .sendEmail(anyString(), anyString(), anyString(), anyString());
 
         //when
         boolean result = mailService.sendMail("", "", "", "");
