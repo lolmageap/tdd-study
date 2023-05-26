@@ -31,9 +31,9 @@ class ProductServiceTest {
     @BeforeEach
     void setUp(){
         // before method
-
         // 각 테스트 입장에서 봤을 때 : 아예 몰라도 테스트 내용을 이해하는 데에 문제가 없는가?
         // 수정해도 모든 테스트에 영향을 주지 않는가?
+        // 위 두 질문을 모두 만족을 하면 @BeforeEach 객체를 생성해도 괜찮다!
     }
 
     @AfterEach

@@ -43,6 +43,16 @@ class OrderServiceTest {
 
     @AfterEach
     void tearDown(){
+        /**
+         * deleteAllInBatch == 하나의 테이블을 깔끔하게 한번에 다 날릴 수 있다.
+         * 하지만 Foreign Key 제약을 받기 때문에 삭제시 순서에 영향을 받는다
+         *
+         * deleteAll == 객체를 한번에 delete 하는 것이 아닌
+         * FindAll 해와서 객체를 하나씩 건단위로 삭제를 해서 성능에 영향이 있다. -> foreach(delete<?>)
+         * 하지만 Foreign Key 제약된 객체를 같이 delete해서 deleteAllInBatch에 비해 순서에 영향을 비교적 적게 받는다.
+         * 그리고 하나의 객체를 지우기만 해도 CASCADE Type이 ALL, REMOVE 상태인 객체들을 모두 지워준다.
+         */
+
         orderProductRepository.deleteAllInBatch();
         productRepository.deleteAllInBatch();
         orderRepository.deleteAllInBatch();
