@@ -55,9 +55,9 @@ class ProductTypeTest {
 
     private static Stream<Arguments> provideProductTypesForCheckingStockType(){
         return Stream.of(
-                Arguments.arguments(ProductType.BAKERY, false),
+                Arguments.arguments(ProductType.BAKERY, true),
                 Arguments.arguments(ProductType.BOTTLE, true),
-                Arguments.arguments(ProductType.HANDMADE, true)
+                Arguments.arguments(ProductType.HANDMADE, false)
         );
     }
 

@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 import sample.cafekiosk.spring.client.mail.MailSendClient;
 import sample.cafekiosk.spring.domain.history.mail.MailSendHistory;
 import sample.cafekiosk.spring.domain.history.mail.MailSendHistoryRepository;
@@ -27,8 +28,7 @@ import static org.mockito.Mockito.when;
 import static sample.cafekiosk.spring.domain.product.ProductType.HANDMADE;
 import static sample.cafekiosk.spring.domain.product.SellingStatus.SELLING;
 
-@SpringBootTest
-class OrderStatisticsServiceTest {
+class OrderStatisticsServiceTest extends IntegrationTestSupport {
 
     @Autowired
     private OrderStatisticsService orderStatisticsService;
@@ -45,8 +45,13 @@ class OrderStatisticsServiceTest {
     @Autowired
     MailSendHistoryRepository mailSendHistoryRepository;
 
-    @MockBean
-    MailSendClient mailSendClient;
+    /**
+     * Test 통합 환경을 위해 MailSendClient를 상위 객체로 올리고 공용으로 사용한다.
+     * 상위 테스트 객체에서 상속을 받았어도 테스트 환경이 달라지면 새로 서버를 띄우기 떄문에 테스트 시간이 늘어난다.
+     */
+
+//    @MockBean
+//    MailSendClient mailSendClient;
 
     @AfterEach
     void tearDown(){

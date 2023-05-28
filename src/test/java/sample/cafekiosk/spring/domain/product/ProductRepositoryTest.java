@@ -7,14 +7,14 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import sample.cafekiosk.spring.IntegrationTestSupport;
 
 import java.util.List;
 import java.util.Optional;
 
 import static sample.cafekiosk.spring.domain.product.SellingStatus.*;
 
-@SpringBootTest
-class ProductRepositoryTest {
+class ProductRepositoryTest extends IntegrationTestSupport {
 
     @Autowired
     ProductRepository productRepository;
